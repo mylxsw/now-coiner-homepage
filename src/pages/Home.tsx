@@ -779,7 +779,7 @@ export default function Home({ targetSection }: HomeProps) {
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {t.features.cards.map((c) => {
+            {t.features.cards.map((c: { t: string; d: string; icon: string; m?: string }) => {
               const icon =
                 c.icon === "pin" ? (
                   <Pin className="h-5 w-5" />
