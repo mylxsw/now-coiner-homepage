@@ -5,6 +5,7 @@ import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "@/pages/Home";
+import Privacy from "@/pages/Privacy";
 
 // Use hash-based routing (/#/) to support opening index.html directly via file:// protocol
 // Tolerant routing: unmatched paths are treated as anchor sections (e.g., /#/services → scroll to #services)
@@ -14,6 +15,7 @@ function AppRouter() {
     <Router hook={useHashLocation}>
       <Switch>
         {/* Add explicit routes here, e.g.: <Route path="/login" component={LoginPage} /> */}
+        <Route path="/privacy" component={Privacy} />
         <Route path="/:section?">{(params) => <Home targetSection={params.section} />}</Route>
       </Switch>
     </Router>

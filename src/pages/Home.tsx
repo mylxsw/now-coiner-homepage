@@ -1056,13 +1056,13 @@ export default function Home({ targetSection }: HomeProps) {
               <span>© {new Date().getFullYear()} NowCoiner</span>
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <button
+              <Link
+                href="/privacy"
                 className="inline-flex items-center gap-2 hover:text-white"
-                onClick={() => onComingSoon(t.footer.privacy)}
               >
                 {t.footer.privacy}
                 <ShieldCheck className="h-4 w-4" />
-              </button>
+              </Link>
               <button
                 className="inline-flex items-center gap-2 hover:text-white"
                 onClick={() => onComingSoon(t.footer.about)}
