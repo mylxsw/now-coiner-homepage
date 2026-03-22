@@ -33,6 +33,10 @@ type Lang = "en" | "zh";
 
 type NavItem = { id: string; label: string };
 
+const APP_STORE_URL = "https://apps.apple.com/app/nowcoiner/id6759320009";
+const GITHUB_URL = "https://github.com/mylxsw/now-coiner";
+const ABOUT_URL = "https://gulu.ai";
+
 function cnJoin(...xs: Array<string | false | undefined | null>) {
   return xs.filter(Boolean).join(" ");
 }
@@ -70,7 +74,7 @@ const copy = {
       h1: "Keep prices in the corner of your eye.",
       p: "NowCoiner is a macOS menubar crypto tracker: configurable multi-coin ticker, pin/unpin, drag-to-reorder, and a rich detail view with market data — fast, clean, and distraction-free.",
       ctaPrimary: "Download NowCoiner",
-      ctaSecondary: "Coming Soon",
+      ctaSecondary: "GitHub",
       stats: {
         s1v: "< 1s",
         s1l: "Update cadence",
@@ -186,6 +190,14 @@ const copy = {
           q: "Is it resource-heavy?",
           a: "NowCoiner is built natively in Swift and keeps updates lightweight. Usage depends on how many coins you pin and your refresh settings.",
         },
+        {
+          q: "Is NowCoiner open source and free?",
+          a: "Yes. NowCoiner is open source, and you can build and use it yourself at no cost. If you'd like to support ongoing development, the App Store version is the same app as the open source release and costs about the price of a cup of coffee.",
+        },
+        {
+          q: "Does NowCoiner read my private information or wallet data?",
+          a: "No. NowCoiner is a market-tracking tool, not a wallet or custody service. It does not read, store, or upload your private information, wallet contents, or private keys. The app connects directly to public cryptocurrency data providers to fetch market data, so you can monitor prices without exposing personal or wallet information.",
+        },
       ],
     },
     cta: {
@@ -200,7 +212,7 @@ const copy = {
       contact: "Contact",
       comingSoonTitle: "Coming soon",
       comingSoonDesc: "I’ll hook up the real link once you send it.",
-      linksTip: "App Store / GitHub Comming soon",
+      linksTip: "App Store is live · GitHub is available",
     },
   },
   zh: {
@@ -221,7 +233,7 @@ const copy = {
       h1: "让价格，永远在你余光里。",
       p: "NowCoiner 是一款基于 macOS 菜单栏的加密货币价格追踪应用：多币种可配置展示、Pin、拖拽排序、以及市场数据。专注、干净、响应快。",
       ctaPrimary: "下载 NowCoiner",
-      ctaSecondary: "敬请期待",
+      ctaSecondary: "GitHub",
       stats: {
         s1v: "< 1s",
         s1l: "价格更新速度",
@@ -332,6 +344,14 @@ const copy = {
           q: "会很占资源吗？",
           a: "NowCoiner 使用原生 Swift 开发，并尽量让更新与渲染保持轻量。实际占用取决于你 Pin 的币种数量与刷新设置。",
         },
+        {
+          q: "NowCoiner 是开源且免费的吗？",
+          a: "是的。NowCoiner 已经开源，你可以完全免费地自行编译和使用。如果你愿意支持后续开发，也欢迎在 App Store 购买正式版。它与开源版本保持一致，价格也只是一杯咖啡的钱。",
+        },
+        {
+          q: "NowCoiner 会读取我的隐私信息或钱包数据吗？",
+          a: "不会。NowCoiner 只是一个行情追踪工具，不是钱包，也不托管任何资产。它不会读取、存储或上传你的隐私信息、钱包内容或私钥。应用只是直接连接公开的加密货币数据服务来获取行情，因此你可以在不暴露个人信息或钱包信息的情况下查看市场数据。",
+        },
       ],
     },
     cta: {
@@ -346,7 +366,7 @@ const copy = {
       contact: "联系",
       comingSoonTitle: "即将上线",
       comingSoonDesc: "敬请期待。",
-      linksTip: "App Store / GitHub 链接暂未发布，敬请期待。",
+      linksTip: "App Store 已上线 · GitHub 已可访问",
     },
   },
 } as const;
@@ -560,6 +580,8 @@ function ResilienceBlock({ t }: { t: typeof copy.en }) {
 export default function Home({ targetSection }: HomeProps) {
   const [lang, setLang] = useLang();
   const t = (lang === "zh" ? copy.zh : copy.en) as typeof copy.en;
+  const openGitHub = () =>
+    window.open(GITHUB_URL, "_blank", "noopener,noreferrer");
 
   const nav: NavItem[] = useMemo(
     () => [
@@ -648,17 +670,19 @@ export default function Home({ targetSection }: HomeProps) {
             </div>
 
             <Button
+              asChild
               variant="secondary"
               className="border border-white/10 bg-white/10 text-white hover:bg-white/15"
-              onClick={() => onComingSoon(t.top.download)}
             >
-              {t.top.download}
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <a href={APP_STORE_URL} target="_blank" rel="noreferrer">
+                {t.top.download}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
             </Button>
             <Button
               variant="outline"
               className="hidden border-white/15 bg-transparent text-white/80 hover:bg-white/10 md:inline-flex"
-              onClick={() => window.open("https://github.com/mylxsw", "_blank")}
+              onClick={openGitHub}
             >
               {t.top.github}
             </Button>
@@ -705,22 +729,20 @@ export default function Home({ targetSection }: HomeProps) {
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Button
+                  asChild
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90"
-                  onClick={() => onComingSoon(t.top.download)}
                 >
-                  {t.hero.ctaPrimary}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <a href={APP_STORE_URL} target="_blank" rel="noreferrer">
+                    {t.hero.ctaPrimary}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="border-white/15 bg-transparent text-white/80 hover:bg-white/10"
-                  onClick={() =>
-                    toast.message(t.top.subtitle, {
-                      description: t.footer.linksTip,
-                    })
-                  }
+                  onClick={openGitHub}
                 >
                   {t.hero.ctaSecondary}
                 </Button>
@@ -1016,12 +1038,14 @@ export default function Home({ targetSection }: HomeProps) {
               </div>
               <div className="flex flex-wrap items-center gap-3">
                 <Button
+                  asChild
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90"
-                  onClick={() => onComingSoon(t.top.download)}
                 >
-                  {t.cta.primary}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <a href={APP_STORE_URL} target="_blank" rel="noreferrer">
+                    {t.cta.primary}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
                 <Button
                   size="lg"
@@ -1039,7 +1063,7 @@ export default function Home({ targetSection }: HomeProps) {
 
             <div
               aria-hidden
-              className="absolute -bottom-36 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full blur-3xl"
+              className="pointer-events-none absolute -bottom-36 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full blur-3xl"
               style={{
                 background:
                   "radial-gradient(closest-side, color-mix(in oklab, oklch(0.74 0.14 195) 38%, transparent) 0%, transparent 72%)",
@@ -1063,13 +1087,15 @@ export default function Home({ targetSection }: HomeProps) {
                 {t.footer.privacy}
                 <ShieldCheck className="h-4 w-4" />
               </Link>
-              <button
+              <a
                 className="inline-flex items-center gap-2 hover:text-white"
-                onClick={() => onComingSoon(t.footer.about)}
+                href={ABOUT_URL}
+                target="_blank"
+                rel="noreferrer"
               >
                 {t.footer.about}
                 <Sparkles className="h-4 w-4" />
-              </button>
+              </a>
               <a
                 className="inline-flex items-center gap-2 hover:text-white"
                 href="mailto:mylxsw@gulu.ai"
